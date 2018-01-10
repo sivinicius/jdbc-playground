@@ -13,5 +13,14 @@ public enum Status {
 	public String getValor() {
 		return valor;
 	}
+
+	public static Status obterStatus(String ativo) {
+		for (Status status : Status.values()) {
+			if(status.valor.equalsIgnoreCase(ativo)) {
+				return status;
+			}
+		}
+		return null;
+	}
 	
 }

@@ -5,3 +5,4 @@ jdbc_playground/.settings/
 jdbc_playground/.classpath
 jdbc_playground/.project
 jdbc_playground/target
+/target/
