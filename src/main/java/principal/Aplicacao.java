@@ -15,15 +15,28 @@ public class Aplicacao {
 	public static void main(String[] args) throws SQLException {
 		Connection conexao = new FabricaDeConexao().getConnection();		
 		DAO<Curso> cursoDao = new CursoDAO(conexao);
-		Curso curso = new Curso("Teste", Status.ATIVO);
+		Curso cursoInsere = new Curso("Teste", Status.ATIVO);
+		Curso cursoAltera = new Curso(5, "Teste Alterado", Status.ATIVO);
 		
-		if(cursoDao.inserir(curso)) {
-			List<Curso> cursos = cursoDao.buscarTodos();
-			for (Curso c : cursos) {
-				System.out.println(c);
-			}
-		}else {
-			System.out.println("Curso não foi inserido");
+		//Insert
+		cursoDao.inserir(cursoInsere);		
+		imprimirCursos(cursoDao);
+		
+		System.out.println("#############################");
+		
+		cursoDao.atualizar(cursoAltera);
+		imprimirCursos(cursoDao);
+
+		System.out.println("#############################");
+		
+		cursoDao.deletar(cursoAltera.getId());
+		imprimirCursos(cursoDao);
+	}
+
+	private static void imprimirCursos(DAO<Curso> cursoDao) {
+		List<Curso> cursos = cursoDao.buscarTodos();
+		for (Curso c : cursos) {
+			System.out.println(c);
 		}
 	}
 }
