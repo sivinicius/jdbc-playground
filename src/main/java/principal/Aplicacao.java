@@ -6,37 +6,51 @@ import java.util.List;
 
 import configuracao.DAO;
 import configuracao.FabricaDeConexao;
-import dao.CursoDAO;
-import dominio.Status;
-import modelo.Curso;
+import dao.ProfessorDAO;
+import modelo.Professor;
 
 public class Aplicacao {
 
 	public static void main(String[] args) throws SQLException {
 		Connection conexao = new FabricaDeConexao().getConnection();		
-		DAO<Curso> cursoDao = new CursoDAO(conexao);
-		Curso cursoInsere = new Curso("Teste", Status.ATIVO);
-		Curso cursoAltera = new Curso(5, "Teste Alterado", Status.ATIVO);
+		ProfessorDAO professorDAO = new ProfessorDAO(conexao);
+		Professor professorInsere = new Professor("Sicrano Silva");
+		Professor professorInsere2 = new Professor("Fulano Silva");
+		Professor professorInsere3 = new Professor("Catão Silva");
+		Professor professorInsere4 = new Professor("Ciprio Silva");
+		Professor professorAltera = new Professor(6, "Beltrano Silva");
 		
 		//Insert
-		cursoDao.inserir(cursoInsere);		
-		imprimirCursos(cursoDao);
+		professorDAO.inserir(professorInsere);		
+		professorDAO.inserir(professorInsere2);		
+		professorDAO.inserir(professorInsere3);		
+		professorDAO.inserir(professorInsere4);		
+		imprimirProfessores(professorDAO);
+		
 		
 		System.out.println("#############################");
 		
-		cursoDao.atualizar(cursoAltera);
-		imprimirCursos(cursoDao);
+		professorDAO.atualizar(professorAltera);
+		imprimirProfessores(professorDAO);
 
 		System.out.println("#############################");
 		
-		cursoDao.deletar(cursoAltera.getId());
-		imprimirCursos(cursoDao);
+		professorDAO.deletar(professorAltera.getId());
+		imprimirProfessores(professorDAO);
+		
+		System.out.println("#############################");
+		
+		System.out.println(professorDAO.buscarPor("Ciprio"));		
+		
+		System.out.println("#############################");
+		
+		System.out.println(professorDAO.buscarPor(2));
 	}
 
-	private static void imprimirCursos(DAO<Curso> cursoDao) {
-		List<Curso> cursos = cursoDao.buscarTodos();
-		for (Curso c : cursos) {
-			System.out.println(c);
+	private static void imprimirProfessores(DAO<Professor> professorDAO) {
+		List<Professor> professores = professorDAO.buscarTodos();
+		for (Professor p : professores) {
+			System.out.println(p);
 		}
 	}
 }

@@ -70,7 +70,7 @@ public class CursoDAO implements DAO<Curso>{
 	}
 
 	@Override
-	public Curso buscar(Integer id) {
+	public Curso buscarPor(Integer id) {
 		Curso curso = null;
 		try (PreparedStatement statement = conexao.prepareStatement(SQL_BUSCA)) {
 			statement.setInt(1, id);
