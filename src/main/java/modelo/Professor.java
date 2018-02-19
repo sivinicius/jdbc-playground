@@ -4,6 +4,10 @@ public class Professor {
 	
 	private Integer id;
 	private String nome;
+	
+	public Professor() {
+		
+	}
 
 	public Professor(Integer id, String nome) {
 		super();

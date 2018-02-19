@@ -7,6 +7,10 @@ public class Curso {
 	private Integer id;
 	private String nome;
 	private Status ativo = Status.ATIVO;
+	
+	public Curso() {
+		
+	}
 
 	public Curso(Integer id, String nome, Status ativo) {
 		this.id = id;

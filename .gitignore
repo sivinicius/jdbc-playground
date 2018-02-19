@@ -6,3 +6,6 @@ jdbc_playground/.classpath
 jdbc_playground/.project
 jdbc_playground/target
 /target/
+/bin/
+/.project
+/.classpath
