@@ -20,8 +20,8 @@ import modelo.Turma;
 public class TurmaDAO implements DAO<Turma> {
 
 	private static final Logger LOGGER = Logger.getLogger(CursoDAO.class.getName());
-	private static final String SQL_INSERE = "insert into public.tb_turma(data_inicio, data_fim, id_curso, id_professor) values (?, ?, ?, ?)";
-	private static final String SQL_ATUALIZA = "update public.tb_professores set data_inicio = ?, data_fim = ?, id_curso = ?, id_professor = ?,  where id = ? ";
+	private static final String SQL_INSERE = "insert into public.tb_turmas(data_inicio, data_fim, id_curso, id_professor) values (?, ?, ?, ?)";
+	private static final String SQL_ATUALIZA = "update public.tb_turmas set data_inicio = ?, data_fim = ?, id_curso = ?, id_professor = ? where id = ? ";
 	private static final String SQL_DELETE = "delete from public.tb_turmas where id = ?";
 	private static final String SQL_BUSCA = "select * from public.tb_turmas where id = ?";
 	private static final String SQL_BUSCA_TODOS = "select * from public.tb_turmas";
@@ -112,44 +112,48 @@ public class TurmaDAO implements DAO<Turma> {
 		}
 	}
 
-	public Turma buscarPor(Curso curso) {
-		Turma turma = null;
+	public List<Turma> buscarPor(Curso curso) {
+		List<Turma> turmas = new ArrayList<Turma>();
 		try (PreparedStatement statement = conexao.prepareStatement(SQL_BUSCA_POR_CURSO)) {
 			statement.setInt(1, curso.getId());
 			statement.execute();
 			try (ResultSet resultSet = statement.getResultSet()) {
 				while (resultSet.next()) {
-					turma = transformarEmTurma(resultSet);
+					Turma turma = transformarEmTurma(resultSet);
+					turmas.add(turma);
 				}
 			}
 		} catch (SQLException e) {
 			LOGGER.log(Level.WARNING, e.getMessage());
 		}
-		return turma;
+		return turmas;
 	}
 
-	public Turma buscarPor(Professor professor) {
-		Turma turma = null;
+	public List<Turma> buscarPor(Professor professor) {
+		List<Turma> turmas = new ArrayList<Turma>();
 		try (PreparedStatement statement = conexao.prepareStatement(SQL_BUSCA_POR_PROFESSOR)) {
 			statement.setInt(1, professor.getId());
 			statement.execute();
 			try (ResultSet resultSet = statement.getResultSet()) {
 				while (resultSet.next()) {
-					turma = transformarEmTurma(resultSet);
+					Turma turma = transformarEmTurma(resultSet);
+					turmas.add(turma);
 				}
 			}
 		} catch (SQLException e) {
 			LOGGER.log(Level.WARNING, e.getMessage());
 		}
-		return turma;
+		return turmas;
 	}
 
 	private Turma transformarEmTurma(ResultSet resultSet) throws SQLException {
 		Integer id = resultSet.getInt("id");
 		LocalDate dataInicio = resultSet.getDate("data_inicio").toLocalDate();
 		LocalDate dataFim = resultSet.getDate("data_fim").toLocalDate();
-		Curso curso = new Curso();
-		Professor professor = new Professor();
+		Integer idCurso = resultSet.getInt("id_curso");
+		Integer idProfessor = resultSet.getInt("id_professor");
+		Curso curso = new CursoDAO(conexao).buscarPor(idCurso);
+		Professor professor = new ProfessorDAO(conexao).buscarPor(idProfessor);
 		return new Turma(id, dataInicio, dataFim, curso, professor);
 	}
 

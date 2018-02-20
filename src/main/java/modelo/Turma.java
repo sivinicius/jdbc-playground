@@ -23,6 +23,13 @@ public class Turma {
 		this.professor = professor;
 	}
 	
+	public Turma(LocalDate dataInicio, LocalDate dataFim, Curso curso, Professor professor) {
+		this.dataInicio = dataInicio;
+		this.dataFim = dataFim;
+		this.curso = curso;
+		this.professor = professor;
+	}
+
 	public Integer getId() {
 		return id;
 	}
