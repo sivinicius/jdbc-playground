@@ -1,5 +1,9 @@
 package modelo;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import dominio.Status;
 
 public class Curso {
@@ -7,26 +11,18 @@ public class Curso {
 	private Integer id;
 	private String nome;
 	private Status ativo = Status.ATIVO;
-	
+
 	public Curso() {
-		
+
 	}
 
 	public Curso(Integer id, String nome, Status ativo) {
+		super();
 		this.id = id;
 		this.nome = nome;
 		this.ativo = ativo;
 	}
 
-	public Curso(String nome, Status ativo) {
-		this.nome = nome;
-		this.ativo = ativo;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	
 	public Integer getId() {
 		return id;
 	}
@@ -41,7 +37,25 @@ public class Curso {
 
 	@Override
 	public String toString() {
-		return "Id: " + this.getId() + ", Curso: " + this.getNome() + ", Ativo: " + this.isAtivo();
+		return new ToStringBuilder(this).append("ID", this.getId()).append("Nome", this.getNome())
+				.append("Ativo", this.isAtivo()).toString();
+	}
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder().append(this.getId()).toHashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Curso other = (Curso) obj;
+		return new EqualsBuilder().append(this.getId(), other.getId()).isEquals();
 	}
 
 }

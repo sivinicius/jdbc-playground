@@ -10,76 +10,70 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import configuracao.DAO;
+import configuracao.CRUD;
 import dominio.Status;
 import modelo.Curso;
 
-public class CursoDAO implements DAO<Curso>{
-	
+public class CursoDAO implements CRUD<Curso> {
+
 	private static final Logger LOGGER = Logger.getLogger(CursoDAO.class.getName());
-	private static final String SQL_INSERE = "insert into public.tb_cursos(nome, ativo) values (?, ?)";
-	private static final String SQL_ATUALIZA = "update public.tb_cursos set nome = ?, ativo = ? where id = ? ";
-	private static final String SQL_DELETE = "delete from public.tb_cursos where id = ?";
-	private static final String SQL_BUSCA = "select * from public.tb_cursos where id = ?";
-	private static final String SQL_BUSCA_TODOS = "select * from public.tb_cursos";
-	
+
+	private static final String SQL_INSERE = "INSERT INTO public.tb_cursos(nome, ativo) VALUES(?, ?)";	
+	private static final String SQL_ATUALIZA = "UPDATE public.tb_cursos SET nome = ?, ativo = ? WHERE id = ? ";	
+	private static final String SQL_DELETE = "DELETE FROM public.tb_cursos WHERE id = ?";
+	private static final String SQL_BUSCA_POR_ID = "SELECT * FROM public.tb_cursos WHERE id = ?";
+	private static final String SQL_BUSCA_TODOS = "SELECT * FROM public.tb_cursos";
+
 	Connection conexao;
-	
+
 	public CursoDAO(Connection conexao) {
 		this.conexao = conexao;
 	}
-	
+
 	@Override
-	public boolean inserir(Curso entidade) {
+	public void inserir(Curso entidade) {
 		try (PreparedStatement statement = conexao.prepareStatement(SQL_INSERE)) {
 			statement.setString(1, entidade.getNome());
 			statement.setString(2, entidade.isAtivo());
 			statement.executeUpdate();
-			return true;
 		} catch (SQLException e) {
 			LOGGER.log(Level.WARNING, e.getMessage());
-			return false;
 		}
 	}
 
 	@Override
-	public boolean atualizar(Curso entidade) {
+	public void atualizar(Curso entidade) {
 		try (PreparedStatement statement = conexao.prepareStatement(SQL_ATUALIZA)) {
 			statement.setString(1, entidade.getNome());
 			statement.setString(2, entidade.isAtivo());
 			statement.setInt(3, entidade.getId());
 			statement.executeUpdate();
-			return true;
 		} catch (SQLException e) {
 			LOGGER.log(Level.WARNING, e.getMessage());
-			return false;
 		}
 	}
-	
 
 	@Override
-	public boolean deletar(Integer id) {
+	public void deletar(Curso entidade) {
 		try (PreparedStatement statement = conexao.prepareStatement(SQL_DELETE)) {
-			statement.setInt(1, id);
-			statement.execute();	
-			return true;
+			statement.setInt(1, entidade.getId());
+			statement.execute();
 		} catch (SQLException e) {
 			LOGGER.log(Level.WARNING, e.getMessage());
-			return false;
 		}
 	}
 
 	@Override
-	public Curso buscarPor(Integer id) {
+	public Curso buscarPor(Integer idCurso) {
 		Curso curso = null;
-		try (PreparedStatement statement = conexao.prepareStatement(SQL_BUSCA)) {
-			statement.setInt(1, id);
+		try (PreparedStatement statement = conexao.prepareStatement(SQL_BUSCA_POR_ID)) {
+			statement.setInt(1, idCurso);
 			statement.execute();
 			try (ResultSet resultSet = statement.getResultSet()) {
 				while (resultSet.next()) {
-					curso = transformarEmCurso(resultSet);	
+					curso = transformarEmCurso(resultSet);
 				}
-			}				
+			}
 		} catch (SQLException e) {
 			LOGGER.log(Level.WARNING, e.getMessage());
 		}
@@ -88,7 +82,7 @@ public class CursoDAO implements DAO<Curso>{
 
 	@Override
 	public List<Curso> buscarTodos() {
-		List<Curso> cursos = new ArrayList<Curso>();
+		List<Curso> cursos = new ArrayList<>();
 		try (PreparedStatement statement = conexao.prepareStatement(SQL_BUSCA_TODOS)) {
 			statement.execute();
 			try (ResultSet resultSet = statement.getResultSet()) {

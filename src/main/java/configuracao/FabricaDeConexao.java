@@ -19,9 +19,8 @@ public class FabricaDeConexao {
 		dataSource = pool;
 	}
 
-	public Connection getConnection() throws SQLException {
-		Connection connection = dataSource.getPooledConnection().getConnection();
-		return connection;
+	public Connection obterConexao() throws SQLException {
+		return dataSource.getPooledConnection().getConnection();
 	}
 
 }

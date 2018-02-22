@@ -1,5 +1,9 @@
 package modelo;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 public class Professor {
 	
 	private Integer id;
@@ -29,6 +33,23 @@ public class Professor {
 
 	@Override
 	public String toString() {
-		return "Professor: " + this.nome + ", ID: " + this.id;
+		return new ToStringBuilder(this).append("ID", this.getId()).append("Nome", this.getNome()).toString();
+	}
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder().append(this.getId()).toHashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Curso other = (Curso) obj;
+		return new EqualsBuilder().append(this.getId(), other.getId()).isEquals();
 	}
 }

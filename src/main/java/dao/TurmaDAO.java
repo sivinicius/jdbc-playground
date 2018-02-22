@@ -12,21 +12,21 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import configuracao.DAO;
+import configuracao.CRUD;
 import modelo.Curso;
 import modelo.Professor;
 import modelo.Turma;
 
-public class TurmaDAO implements DAO<Turma> {
+public class TurmaDAO implements CRUD<Turma> {
 
 	private static final Logger LOGGER = Logger.getLogger(CursoDAO.class.getName());
-	private static final String SQL_INSERE = "insert into public.tb_turmas(data_inicio, data_fim, id_curso, id_professor) values (?, ?, ?, ?)";
-	private static final String SQL_ATUALIZA = "update public.tb_turmas set data_inicio = ?, data_fim = ?, id_curso = ?, id_professor = ? where id = ? ";
-	private static final String SQL_DELETE = "delete from public.tb_turmas where id = ?";
-	private static final String SQL_BUSCA = "select * from public.tb_turmas where id = ?";
-	private static final String SQL_BUSCA_TODOS = "select * from public.tb_turmas";
-	private static final String SQL_BUSCA_POR_CURSO = "select t.* from public.tb_turmas as t inner join public.tb_cursos as c on t.id_curso = c.id where c.id = ? ";
-	private static final String SQL_BUSCA_POR_PROFESSOR = "select t.* from public.tb_turmas as t inner join public.tb_professores as p on t.id_professor = p.id where p.id = ? ";
+	private static final String SQL_INSERE = "INSERT INTO public.tb_turmas(data_inicio, data_fim, id_curso, id_professor) VALUES (?, ?, ?, ?)";
+	private static final String SQL_ATUALIZA = "UPDATE public.tb_turmas SET data_inicio = ?, data_fim = ?, id_curso = ?, id_professor = ? WHERE id = ? ";
+	private static final String SQL_DELETE = "DELETE FROM public.tb_turmas WHERE id = ?";
+	private static final String SQL_BUSCA = "SELECT * FROM public.tb_turmas WHERE id = ?";
+	private static final String SQL_BUSCA_TODOS = "SELECT * FROM public.tb_turmas";
+	private static final String SQL_BUSCA_POR_CURSO = "SELECT t.* FROM public.tb_turmas AS t inner join public.tb_cursos AS c on t.id_curso = c.id WHERE c.id = ? ";
+	private static final String SQL_BUSCA_POR_PROFESSOR = "SELECT t.* FROM public.tb_turmas AS t inner join public.tb_professores AS p on t.id_professor = p.id WHERE p.id = ? ";
 
 	Connection conexao;
 
@@ -35,22 +35,20 @@ public class TurmaDAO implements DAO<Turma> {
 	}
 
 	@Override
-	public boolean inserir(Turma entidade) {
+	public void inserir(Turma entidade) {
 		try (PreparedStatement statement = conexao.prepareStatement(SQL_INSERE)) {
 			statement.setDate(1, Date.valueOf(entidade.getDataInicio()));
 			statement.setDate(2, Date.valueOf(entidade.getDataFim()));
 			statement.setInt(3, entidade.getCurso().getId());
 			statement.setInt(4, entidade.getProfessor().getId());
 			statement.executeUpdate();
-			return true;
 		} catch (SQLException e) {
 			LOGGER.log(Level.WARNING, e.getMessage());
-			return false;
 		}
 	}
 
 	@Override
-	public boolean atualizar(Turma entidade) {
+	public void atualizar(Turma entidade) {
 		try (PreparedStatement statement = conexao.prepareStatement(SQL_ATUALIZA)) {
 			statement.setDate(1, Date.valueOf(entidade.getDataInicio()));
 			statement.setDate(2, Date.valueOf(entidade.getDataFim()));
@@ -58,22 +56,18 @@ public class TurmaDAO implements DAO<Turma> {
 			statement.setInt(4, entidade.getProfessor().getId());
 			statement.setInt(5, entidade.getId());
 			statement.executeUpdate();
-			return true;
 		} catch (SQLException e) {
 			LOGGER.log(Level.WARNING, e.getMessage());
-			return false;
 		}
 	}
 
 	@Override
-	public boolean deletar(Integer id) {
+	public void deletar(Turma entidade) {
 		try (PreparedStatement statement = conexao.prepareStatement(SQL_DELETE)) {
-			statement.setInt(1, id);
+			statement.setInt(1, entidade.getId());
 			statement.execute();
-			return true;
 		} catch (SQLException e) {
 			LOGGER.log(Level.WARNING, e.getMessage());
-			return false;
 		}
 	}
 
@@ -96,7 +90,7 @@ public class TurmaDAO implements DAO<Turma> {
 
 	@Override
 	public List<Turma> buscarTodos() {
-		List<Turma> turmas = new ArrayList<Turma>();
+		List<Turma> turmas = new ArrayList<>();
 		try (PreparedStatement statement = conexao.prepareStatement(SQL_BUSCA_TODOS)) {
 			statement.execute();
 			try (ResultSet resultSet = statement.getResultSet()) {
@@ -113,7 +107,7 @@ public class TurmaDAO implements DAO<Turma> {
 	}
 
 	public List<Turma> buscarPor(Curso curso) {
-		List<Turma> turmas = new ArrayList<Turma>();
+		List<Turma> turmas = new ArrayList<>();
 		try (PreparedStatement statement = conexao.prepareStatement(SQL_BUSCA_POR_CURSO)) {
 			statement.setInt(1, curso.getId());
 			statement.execute();
@@ -130,7 +124,7 @@ public class TurmaDAO implements DAO<Turma> {
 	}
 
 	public List<Turma> buscarPor(Professor professor) {
-		List<Turma> turmas = new ArrayList<Turma>();
+		List<Turma> turmas = new ArrayList<>();
 		try (PreparedStatement statement = conexao.prepareStatement(SQL_BUSCA_POR_PROFESSOR)) {
 			statement.setInt(1, professor.getId());
 			statement.execute();
