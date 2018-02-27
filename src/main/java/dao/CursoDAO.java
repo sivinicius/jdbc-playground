@@ -23,6 +23,7 @@ public class CursoDAO implements CRUD<Curso> {
 	private static final String SQL_DELETE = "DELETE FROM public.tb_cursos WHERE id = ?";
 	private static final String SQL_BUSCA_POR_ID = "SELECT * FROM public.tb_cursos WHERE id = ?";
 	private static final String SQL_BUSCA_TODOS = "SELECT * FROM public.tb_cursos";
+	private static final String SQL_BUSCA_POR_NOME = "SELECT * FROM public.tb_cursos WHERE nome LIKE ?";
 
 	Connection conexao;
 
@@ -68,6 +69,22 @@ public class CursoDAO implements CRUD<Curso> {
 		Curso curso = null;
 		try (PreparedStatement statement = conexao.prepareStatement(SQL_BUSCA_POR_ID)) {
 			statement.setInt(1, idCurso);
+			statement.execute();
+			try (ResultSet resultSet = statement.getResultSet()) {
+				while (resultSet.next()) {
+					curso = transformarEmCurso(resultSet);
+				}
+			}
+		} catch (SQLException e) {
+			LOGGER.log(Level.WARNING, e.getMessage());
+		}
+		return curso;
+	}
+	
+	public Curso buscarPor(String nomeCurso) {
+		Curso curso = null;
+		try (PreparedStatement statement = conexao.prepareStatement(SQL_BUSCA_POR_NOME)) {
+			statement.setString(1, "%" + nomeCurso + "%");
 			statement.execute();
 			try (ResultSet resultSet = statement.getResultSet()) {
 				while (resultSet.next()) {
