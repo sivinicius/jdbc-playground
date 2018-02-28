@@ -18,12 +18,12 @@ public class CursoDAO implements CRUD<Curso> {
 
 	private static final Logger LOGGER = Logger.getLogger(CursoDAO.class.getName());
 
-	private static final String SQL_INSERE = "INSERT INTO public.tb_cursos(nome, ativo) VALUES(?, ?)";	
-	private static final String SQL_ATUALIZA = "UPDATE public.tb_cursos SET nome = ?, ativo = ? WHERE id = ? ";	
-	private static final String SQL_DELETE = "DELETE FROM public.tb_cursos WHERE id = ?";
-	private static final String SQL_BUSCA_POR_ID = "SELECT * FROM public.tb_cursos WHERE id = ?";
-	private static final String SQL_BUSCA_TODOS = "SELECT * FROM public.tb_cursos";
-	private static final String SQL_BUSCA_POR_NOME = "SELECT * FROM public.tb_cursos WHERE nome LIKE ?";
+	private static final String SQL_INSERE = "INSERT INTO tb_cursos(nome, ativo) VALUES(?, ?)";	
+	private static final String SQL_ATUALIZA = "UPDATE tb_cursos SET nome = ?, ativo = ? WHERE id = ? ";	
+	private static final String SQL_DELETE = "DELETE FROM tb_cursos WHERE id = ?";
+	private static final String SQL_BUSCA_POR_ID = "SELECT * FROM tb_cursos WHERE id = ?";
+	private static final String SQL_BUSCA_TODOS = "SELECT * FROM tb_cursos";
+	private static final String SQL_BUSCA_POR_NOME = "SELECT * FROM tb_cursos WHERE nome LIKE ?";
 
 	Connection conexao;
 

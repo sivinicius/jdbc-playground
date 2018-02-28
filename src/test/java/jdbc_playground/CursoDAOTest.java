@@ -1,11 +1,13 @@
 package jdbc_playground;
 
+import static org.junit.Assert.*;
+
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,17 +17,17 @@ import dominio.Status;
 import modelo.Curso;
 
 public class CursoDAOTest {
-	
+
 	private Connection conexao;
 	private CursoDAO cursoDao;
-	
+
 	@Before
 	public void setUp() throws SQLException {
 		conexao = new FabricaDeConexao().obterConexao();
 		conexao.setAutoCommit(false);
 		cursoDao = new CursoDAO(conexao);
 	}
-	
+
 	@After
 	public void tearDown() throws SQLException {
 		conexao.rollback();
@@ -33,38 +35,28 @@ public class CursoDAOTest {
 	}
 
 	@Test
-	public void testarSeBuscaTodosOsCursos() {
-		List<Curso> cursos = cursoDao.buscarTodos();
-		Assert.assertEquals(4, cursos.size());
+	public void seBuscaTodosOsCursos() {
+		List<Curso> cursos = Arrays.asList(new Curso("Teste 1", Status.ATIVO), new Curso("Teste 2", Status.INATIVO));
+		cursos.forEach(curso -> cursoDao.inserir(curso));
+		List<Curso> cursosRecuperados = cursoDao.buscarTodos();
+		assertEquals(cursos.size(), cursosRecuperados.size());
 	}
-	
+
 	@Test
 	public void seFoiInseridoUmNovoCurso() {
-		Curso cursoNovo = new Curso(null, "Teste", Status.ATIVO);
-		Integer quantidadeDeCursosAntesDeInserir = cursoDao.buscarTodos().size();
-		cursoDao.inserir(cursoNovo);
-		Integer quantidadeDeCursosDepoisDeInserir = cursoDao.buscarTodos().size();
-		Assert.assertNotEquals(quantidadeDeCursosAntesDeInserir, quantidadeDeCursosDepoisDeInserir);
+		List<Curso> cursosAntesDoInsert = cursoDao.buscarTodos();
+		cursoDao.inserir(new Curso("Teste", Status.ATIVO));
+		List<Curso> cursosDepoisDoInsert = cursoDao.buscarTodos();
+		assertNotEquals(cursosAntesDoInsert.size(), cursosDepoisDoInsert.size());
 	}
-	
+
 	@Test
 	public void seFoiDeletadoCurso() {
-		Integer quantidadeDeCursosAntesDeDeletar = cursoDao.buscarTodos().size();
-		cursoDao.deletar(cursoDao.buscarTodos().get(1));
-		Integer quantidadeDeCursosDepoisDeDeletar = cursoDao.buscarTodos().size();
-		Assert.assertNotEquals(quantidadeDeCursosAntesDeDeletar, quantidadeDeCursosDepoisDeDeletar);
-	}
-	
-	
-	@Test
-	public void seFoiAlteradoCurso() {
-		Curso cursoNovo= new Curso(null, "Teste Integracao", Status.ATIVO);
-		cursoDao.inserir(cursoNovo);
-		Curso cursoAtual = cursoDao.buscarPor(cursoNovo.getNome());
-		cursoAtual.setNome("Teste Integracao Atualizado");
-		cursoDao.atualizar(cursoAtual);
-		Curso cursoAtualizado = cursoDao.buscarPor(cursoNovo.getNome());
-		Assert.assertNotEquals(cursoNovo.getNome(), cursoAtualizado.getNome());
+		List<Curso> cursos = Arrays.asList(new Curso("Teste 1", Status.ATIVO), new Curso("Teste 2", Status.INATIVO));
+		cursos.forEach(curso -> cursoDao.inserir(curso));
+		cursoDao.deletar(cursoDao.buscarPor("Teste 1"));
+		List<Curso> cursosRecuperados = cursoDao.buscarTodos();
+		assertNotEquals(cursos.size(), cursosRecuperados.size());
 	}
 
 }

@@ -17,12 +17,12 @@ public class ProfessorDAO implements CRUD<Professor>{
 	
 	private static final Logger LOGGER = Logger.getLogger(CursoDAO.class.getName());
 	
-	private static final String SQL_INSERE = "INSERT INTO public.tb_professores(nome) VALUES (?)";
-	private static final String SQL_ATUALIZA = "UPDATE public.tb_professores SET nome = ? WHERE id = ? ";
-	private static final String SQL_DELETE = "DELETE FROM public.tb_professores WHERE id = ?";
-	private static final String SQL_BUSCA_POR_ID = "SELECT * FROM public.tb_professores WHERE id = ?";
-	private static final String SQL_BUSCA_POR_NOME = "SELECT * FROM public.tb_professores WHERE nome like ? ";
-	private static final String SQL_BUSCA_TODOS = "SELECT * FROM public.tb_professores";
+	private static final String SQL_INSERE = "INSERT INTO tb_professores(nome) VALUES (?)";
+	private static final String SQL_ATUALIZA = "UPDATE tb_professores SET nome = ? WHERE id = ? ";
+	private static final String SQL_DELETE = "DELETE FROM tb_professores WHERE id = ?";
+	private static final String SQL_BUSCA_POR_ID = "SELECT * FROM tb_professores WHERE id = ?";
+	private static final String SQL_BUSCA_POR_NOME = "SELECT * FROM tb_professores WHERE nome like ? ";
+	private static final String SQL_BUSCA_TODOS = "SELECT * FROM tb_professores";
 	
 	Connection conexao;
 	

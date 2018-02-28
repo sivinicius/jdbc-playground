@@ -5,17 +5,17 @@ import java.sql.SQLException;
 
 import javax.sql.ConnectionPoolDataSource;
 
-import org.postgresql.ds.PGConnectionPoolDataSource;
+import com.mysql.cj.jdbc.MysqlConnectionPoolDataSource;
 
 public class FabricaDeConexao {
 
 	private ConnectionPoolDataSource dataSource;
 
 	public FabricaDeConexao() {
-		PGConnectionPoolDataSource pool = new PGConnectionPoolDataSource();
-		pool.setUrl("jdbc:postgresql://localhost:5432/estudo");
-		pool.setUser("postgres");
-		pool.setPassword("");
+		MysqlConnectionPoolDataSource pool = new MysqlConnectionPoolDataSource();
+		pool.setUrl("jdbc:mysql://localhost:3306/jdbc_playground?useTimezone=true&serverTimezone=UTC");
+		pool.setUser("root");
+		pool.setPassword("root");
 		dataSource = pool;
 	}
 

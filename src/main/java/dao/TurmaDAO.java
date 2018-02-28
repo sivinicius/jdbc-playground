@@ -20,13 +20,13 @@ import modelo.Turma;
 public class TurmaDAO implements CRUD<Turma> {
 
 	private static final Logger LOGGER = Logger.getLogger(CursoDAO.class.getName());
-	private static final String SQL_INSERE = "INSERT INTO public.tb_turmas(data_inicio, data_fim, id_curso, id_professor) VALUES (?, ?, ?, ?)";
-	private static final String SQL_ATUALIZA = "UPDATE public.tb_turmas SET data_inicio = ?, data_fim = ?, id_curso = ?, id_professor = ? WHERE id = ? ";
-	private static final String SQL_DELETE = "DELETE FROM public.tb_turmas WHERE id = ?";
-	private static final String SQL_BUSCA = "SELECT * FROM public.tb_turmas WHERE id = ?";
-	private static final String SQL_BUSCA_TODOS = "SELECT * FROM public.tb_turmas";
-	private static final String SQL_BUSCA_POR_CURSO = "SELECT t.* FROM public.tb_turmas AS t inner join public.tb_cursos AS c on t.id_curso = c.id WHERE c.id = ? ";
-	private static final String SQL_BUSCA_POR_PROFESSOR = "SELECT t.* FROM public.tb_turmas AS t inner join public.tb_professores AS p on t.id_professor = p.id WHERE p.id = ? ";
+	private static final String SQL_INSERE = "INSERT INTO tb_turmas(data_inicio, data_fim, id_curso, id_professor) VALUES (?, ?, ?, ?)";
+	private static final String SQL_ATUALIZA = "UPDATE tb_turmas SET data_inicio = ?, data_fim = ?, id_curso = ?, id_professor = ? WHERE id = ? ";
+	private static final String SQL_DELETE = "DELETE FROM tb_turmas WHERE id = ?";
+	private static final String SQL_BUSCA = "SELECT * FROM tb_turmas WHERE id = ?";
+	private static final String SQL_BUSCA_TODOS = "SELECT * FROM tb_turmas";
+	private static final String SQL_BUSCA_POR_CURSO = "SELECT t.* FROM tb_turmas AS t inner join  tb_cursos AS c on t.id_curso = c.id WHERE c.id = ? ";
+	private static final String SQL_BUSCA_POR_PROFESSOR = "SELECT t.* FROM tb_turmas AS t inner join  tb_professores AS p on t.id_professor = p.id WHERE p.id = ? ";
 
 	Connection conexao;
 

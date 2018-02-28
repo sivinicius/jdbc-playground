@@ -13,14 +13,17 @@ public class Curso {
 	private Status ativo = Status.ATIVO;
 
 	public Curso() {
-
+		
 	}
 
 	public Curso(Integer id, String nome, Status ativo) {
-		super();
 		this.id = id;
 		this.nome = nome;
 		this.ativo = ativo;
+	}
+	
+	public Curso(String nome, Status ativo) {
+		this(null, nome, ativo);
 	}
 
 	public Integer getId() {
