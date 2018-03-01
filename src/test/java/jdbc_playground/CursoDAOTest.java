@@ -35,7 +35,7 @@ public class CursoDAOTest {
 	}
 
 	@Test
-	public void seBuscaTodosOsCursos() {
+	public void testBuscarTodos() {
 		List<Curso> cursos = Arrays.asList(new Curso("Teste 1", Status.ATIVO), new Curso("Teste 2", Status.INATIVO));
 		cursos.forEach(curso -> cursoDao.inserir(curso));
 		List<Curso> cursosRecuperados = cursoDao.buscarTodos();
@@ -43,7 +43,7 @@ public class CursoDAOTest {
 	}
 
 	@Test
-	public void seFoiInseridoUmNovoCurso() {
+	public void testInserir() {
 		List<Curso> cursosAntesDoInsert = cursoDao.buscarTodos();
 		cursoDao.inserir(new Curso("Teste", Status.ATIVO));
 		List<Curso> cursosDepoisDoInsert = cursoDao.buscarTodos();
@@ -51,10 +51,10 @@ public class CursoDAOTest {
 	}
 
 	@Test
-	public void seFoiDeletadoCurso() {
+	public void testDeletar() {
 		List<Curso> cursos = Arrays.asList(new Curso("Teste 1", Status.ATIVO), new Curso("Teste 2", Status.INATIVO));
 		cursos.forEach(curso -> cursoDao.inserir(curso));
-		cursoDao.deletar(cursoDao.buscarPor("Teste 1"));
+		cursoDao.deletar(cursoDao.buscarPorNome("Teste 1").get(0));
 		List<Curso> cursosRecuperados = cursoDao.buscarTodos();
 		assertNotEquals(cursos.size(), cursosRecuperados.size());
 	}
