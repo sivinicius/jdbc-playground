@@ -26,6 +26,10 @@ public class Professor {
 	public Integer getId() {
 		return id;
 	}
+	
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
 	public String getNome() {
 		return nome;

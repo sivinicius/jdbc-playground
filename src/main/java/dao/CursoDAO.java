@@ -77,7 +77,7 @@ public class CursoDAO implements BaseDAO<Curso> {
 		}
 	}
 
-	public List<Curso> buscarPorNome(String nomeCurso) {
+	public List<Curso> buscarPorPalavraChave(String nomeCurso) {
 		try (PreparedStatement statement = conexao.prepareStatement(SQL_BUSCA_POR_NOME)) {
 			statement.setString(1, "%" + nomeCurso + "%");
 			statement.execute();
@@ -85,6 +85,17 @@ public class CursoDAO implements BaseDAO<Curso> {
 		} catch (SQLException e) {
 			LOGGER.log(Level.WARNING, e.getMessage());
 			return Collections.emptyList();
+		}
+	}
+	
+	public Curso buscarPorNome(String nomeCurso) {
+		try (PreparedStatement statement = conexao.prepareStatement(SQL_BUSCA_POR_NOME)) {
+			statement.setString(1, nomeCurso);
+			statement.execute();
+			return obterResultadoUnicoDe(statement);
+		} catch (SQLException e) {
+			LOGGER.log(Level.WARNING, e.getMessage());
+			return null;
 		}
 	}
 

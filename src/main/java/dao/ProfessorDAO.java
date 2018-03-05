@@ -76,7 +76,7 @@ public class ProfessorDAO implements BaseDAO<Professor> {
 		}
 	}
 
-	public List<Professor> buscarPorNome(String nome) {
+	public List<Professor> buscarPorPalavraChave(String nome) {
 		try (PreparedStatement statement = conexao.prepareStatement(SQL_BUSCA_POR_NOME)) {
 			statement.setString(1, "%" + nome + "%");
 			statement.execute();
@@ -84,6 +84,17 @@ public class ProfessorDAO implements BaseDAO<Professor> {
 		} catch (SQLException e) {
 			LOGGER.log(Level.WARNING, e.getMessage());
 			return Collections.emptyList();
+		}
+	}
+	
+	public Professor buscarPorNome(String nome) {
+		try (PreparedStatement statement = conexao.prepareStatement(SQL_BUSCA_POR_NOME)) {
+			statement.setString(1, nome);
+			statement.execute();
+			return obterResultadoUnicoDe(statement);
+		} catch (SQLException e) {
+			LOGGER.log(Level.WARNING, e.getMessage());
+			return null;
 		}
 	}
 
