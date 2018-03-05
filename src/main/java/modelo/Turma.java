@@ -26,6 +26,10 @@ public class Turma {
 		this.curso = curso;
 		this.professor = professor;
 	}
+	
+	public Turma(LocalDate dataInicio, LocalDate dataFim, Curso curso, Professor professor) {
+		this(null, dataInicio, dataFim, curso, professor);
+	}
 
 	public Integer getId() {
 		return id;
@@ -42,6 +46,10 @@ public class Turma {
 	public Curso getCurso() {
 		return curso;
 	}
+		
+	public void setProfessor(Professor professor) {
+		this.professor = professor;
+	}
 
 	public Professor getProfessor() {
 		return professor;
@@ -49,8 +57,11 @@ public class Turma {
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("ID", this.getId()).append("Curso", this.getCurso())
-				.append("Professor", this.getProfessor()).toString();
+		return new ToStringBuilder(this).append("ID", this.getId())
+				.append("Data Inicio", this.getDataInicio())
+				.append("Data Fim", this.getDataFim())
+				.append("Curso", this.getCurso().getNome())
+				.append("Professor", this.getProfessor().getNome()).toString();
 	}
 
 	@Override

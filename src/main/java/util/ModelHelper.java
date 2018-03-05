@@ -29,17 +29,16 @@ public class ModelHelper {
 	}
 
 	public static final Turma obterTurmaDe(ResultSet resultSet) throws SQLException {
-		Integer id = resultSet.getInt("id");
+		Integer idTurma = resultSet.getInt("id_turma");
 		LocalDate dataInicio = resultSet.getDate("data_inicio").toLocalDate();
-		LocalDate dataFim = resultSet.getDate("data_fim").toLocalDate();
-		
-		/*
-		 * TODO Alterar SQl para retorna curso e professor em uma unica consulta.
-		 * Integer idCurso = resultSet.getInt("id_curso");
-		 * Integer idProfessor = resultSet.getInt("id_professor");
-		 * Curso curso = new CursoDAO(conexao).buscarPor(idCurso);
-		 * Professor professor = new ProfessorDAO(conexao).buscarPor(idProfessor);
-		 */
-		return new Turma(id, dataInicio, dataFim, null, null);
+		LocalDate dataFim = resultSet.getDate("data_fim").toLocalDate();		
+		Integer idCurso = resultSet.getInt("id_curso");
+		String nomeCurso = resultSet.getString("nome_curso");
+		String statusCurso = resultSet.getString("status_curso");
+		Integer idProfessor = resultSet.getInt("id_professor");
+		String nomeProfessor= resultSet.getString("nome_professor");
+		Curso curso = new Curso(idCurso, nomeCurso, Status.obterStatus(statusCurso));
+		Professor professor = new Professor(idProfessor, nomeProfessor);		
+		return new Turma(idTurma, dataInicio, dataFim, curso, professor);
 	}
 }

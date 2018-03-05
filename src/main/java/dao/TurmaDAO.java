@@ -23,10 +23,10 @@ public class TurmaDAO implements BaseDAO<Turma> {
 	private static final String SQL_INSERE = "INSERT INTO tb_turmas(data_inicio, data_fim, id_curso, id_professor) VALUES (?, ?, ?, ?)";
 	private static final String SQL_ATUALIZA = "UPDATE tb_turmas SET data_inicio = ?, data_fim = ?, id_curso = ?, id_professor = ? WHERE id = ? ";
 	private static final String SQL_DELETE = "DELETE FROM tb_turmas WHERE id = ?";
-	private static final String SQL_BUSCA = "SELECT * FROM tb_turmas WHERE id = ?";
-	private static final String SQL_BUSCA_TODOS = "SELECT * FROM tb_turmas";
-	private static final String SQL_BUSCA_POR_CURSO = "SELECT t.* FROM tb_turmas AS t inner join  tb_cursos AS c on t.id_curso = c.id WHERE c.id = ? ";
-	private static final String SQL_BUSCA_POR_PROFESSOR = "SELECT t.* FROM tb_turmas AS t inner join  tb_professores AS p on t.id_professor = p.id WHERE p.id = ? ";
+	private static final String SQL_BUSCA_TODOS = "SELECT t.id as id_turma, t.data_inicio, t.data_fim, c.id as id_curso, c.nome as nome_curso, c.ativo as status_curso, p.id as id_professor, p.nome as nome_professor FROM tb_turmas as t inner join tb_cursos as c on t.id_curso = c.id inner join tb_professores p on t.id_professor = p.id";
+	private static final String SQL_BUSCA = SQL_BUSCA_TODOS + " WHERE t.id = ?";
+	private static final String SQL_BUSCA_POR_CURSO = SQL_BUSCA_TODOS + " WHERE c.id = ? ";
+	private static final String SQL_BUSCA_POR_PROFESSOR = SQL_BUSCA_TODOS + " WHERE p.id = ? ";
 
 	private final Connection conexao;
 
