@@ -1,4 +1,4 @@
-package jdbc_playground;
+package dao;
 
 import static org.junit.Assert.*;
 
