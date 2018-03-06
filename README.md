@@ -18,6 +18,6 @@ Simples projeto para estudo do Java Database Connectivity ou JDBC.
 - Execute os testes das classes **CursoDAOTest**, **ProfessorDAOTest** e **TurmaDAOTest** para confirmar se está tudo funcionando.
 - Agora você pode ficar a vontade para brincar no projeto.
 
-## MODELO UTILIZADO
+## Modelo Utilizado
 
 ![MER](https://github.com/sivinicius/jdbc-playground/blob/master/resources/mer_jdbc_playground.jpg?raw=true)
