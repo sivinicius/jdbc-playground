@@ -17,3 +17,7 @@ Simples projeto para estudo do Java Database Connectivity ou JDBC.
 - Altere a classe **FabricaDeConexao** colocando suas informações de conexão com o banco. 
 - Execute os testes das classes **CursoDAOTest**, **ProfessorDAOTest** e **TurmaDAOTest** para confirmar se está tudo funcionando.
 - Agora você pode ficar a vontade para brincar no projeto.
+
+## MODELO UTILIZADO
+
+![MER](https://github.com/sivinicius/jdbc-playground/tree/master/resources/mer_jdbc_playground.jpg)
