@@ -20,4 +20,4 @@ Simples projeto para estudo do Java Database Connectivity ou JDBC.
 
 ## MODELO UTILIZADO
 
-![MER](https://github.com/sivinicius/jdbc-playground/tree/master/resources/mer_jdbc_playground.jpg?raw=true)
+![MER](https://github.com/sivinicius/jdbc-playground/blob/master/resources/mer_jdbc_playground.jpg?raw=true)
