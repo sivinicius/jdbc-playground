@@ -10,10 +10,10 @@ public class Curso {
 
 	private Integer id;
 	private String nome;
-	private Status ativo = Status.ATIVO;
+	private Status ativo;
 
 	public Curso() {
-		
+		ativo = Status.ATIVO;
 	}
 
 	public Curso(Integer id, String nome, Status ativo) {
@@ -21,7 +21,7 @@ public class Curso {
 		this.nome = nome;
 		this.ativo = ativo;
 	}
-	
+
 	public Curso(String nome, Status ativo) {
 		this(null, nome, ativo);
 	}
@@ -33,7 +33,7 @@ public class Curso {
 	public String getNome() {
 		return nome;
 	}
-		
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
