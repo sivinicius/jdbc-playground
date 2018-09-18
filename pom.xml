@@ -6,7 +6,8 @@
 	<artifactId>jdbc_playground</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-
+	
+	<!-- Development -->
 	<name>jdbc_playground</name>
 
 	<properties>
